@@ -1,0 +1,49 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# An example controller showing a sample home page
+GET     /                           controllers.HomeController.index
+
+# Routes for Event Entity
+#GET     /events/list                controllers.EventsController.displayAllEvents
+#GET     /events/create              controllers.EventsController.create(request: Request)
+#POST    /events/create              controllers.EventsController.save(request: Request)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+# Movie Routes
+GET     /movies/list                    controllers.MovieController.displayMoviesList
++nocsrf
+GET     /movies/addNewMovie             controllers.MovieController.addNewMovies(request: Request,id: Integer)
++nocsrf
+POST    /movies/addNewMovie             controllers.MovieController.saveMovieDetails(request: Request,id: Integer)
+POST    /movies/updateMovieById         controllers.MovieController.saveMovieDetails(request: Request,id: Integer)
+GET     /movies/editMovieDetails        controllers.MovieController.editMovieDetails(request: Request,id: Integer)
+GET     /movies/removeMovieById         controllers.MovieController.removeMovieById(request: Request,id: Integer)
+
+# Multiplex Routes
+GET     /multiplex/list                        controllers.MultiplexController.displayMultiplexDetails
++nocsrf
+GET     /multiplex/addNewMultiplex             controllers.MultiplexController.addNewMultiplex(request: Request,id: Integer)
++nocsrf
+POST    /multiplex/addNewMultiplex             controllers.MultiplexController.addNewMultiplex(request: Request,id: Integer)
+POST    /multiplex/updateMultiplexById         controllers.MultiplexController.saveMultiplexDetails(request: Request,id: Integer)
+GET     /multiplex/editMultiplexDetails        controllers.MultiplexController.editMultiplexDetails(request: Request,id: Integer)
+GET     /multiplex/removeMultiplexById         controllers.MultiplexController.removeMultiplexById(request: Request,id: Integer)
+
+# Allotment Routes
+GET     /allot/list                        controllers.AllotmentController.displayAllotmentDetails
++nocsrf
+GET     /allot/addNewAllotment             controllers.AllotmentController.addNewAllotment(request: Request,id: Integer)
++nocsrf
+POST    /allot/addNewAllotment             controllers.AllotmentController.addNewAllotment(request: Request,id: Integer)
+POST    /allot/updateAllotmentById         controllers.AllotmentController.saveAllotmentDetails(request: Request,id: Integer)
+GET     /allot/editAllotmentDetails        controllers.AllotmentController.editAllotmentDetails(request: Request,id: Integer)
+GET     /allot/removeAllotmentById         controllers.AllotmentController.removeAllotmentById(request: Request,id: Integer)
+
+# Search Routes
+GET     /search                             controllers.SearchController.displaySearchPage(request: Request,id: Integer)
++nocsrf
+POST    /searchByParam                      controllers.SearchController.displaySearchResults(request: Request,id: Integer)

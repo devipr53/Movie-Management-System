@@ -1,0 +1,59 @@
+@import views.html.main
+@import helper._
+@import models.MoviesDto
+@(movieForm: Form[MoviesDto]
+)(implicit request: Http.Request
+        , messages: play.i18n.Messages,movieId : Integer)
+@main("Edit Movie Details",movieId) {
+    @helper.form(action =routes.MovieController.saveMovieDetails(movieId)) {
+        @* CSRF TOKEN SUPPORT *@
+        <form>
+            <div class="col-xs-6" id="div1">
+                <div class="form-group">
+                    <div class="col-sm-5">
+                    @inputText(movieForm("movieName"), Symbol("_label") -> "Movie Name", Symbol("placeholder") -> "Enter Event name")
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-5">
+                    @inputText(movieForm("movieCategory"),Symbol("_label") -> "Movie Category",  Symbol("placeholder") -> "Ex: Comedy,Thriller")
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-5">
+                    @inputText(movieForm("movieProducer"),Symbol("_label") -> "Movie Producer",  Symbol("placeholder") -> "Enter Movie Producer name")
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-5">
+                    @inputText(movieForm("movieDirector"), Symbol("_label") -> "Movie Director", Symbol("placeholder") -> "Enter Movie Director name")
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6" id="div2">
+                <div class="form-group">
+                    <div class="col-sm-5">
+                    @inputText(movieForm("movieReleaseDate"),Symbol("_label") -> "Movie Release Date",  Symbol("placeholder") -> "Enter Movie Release Date")
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-5">
+                    @textarea(movieForm("movieDesc"),Symbol("_label") -> "Movie Description",  Symbol("placeholder") -> "Enter Movie Description")
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-5">
+                    @inputText(movieForm("movieImageUrl"), Symbol("_label") -> "Movie Image", Symbol("placeholder") -> "Enter Movie Image Url")
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary" >Update</button>
+                </div>
+            </div>
+        </form>
+
+        </body>
+    }
+}

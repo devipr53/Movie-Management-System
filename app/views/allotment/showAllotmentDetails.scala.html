@@ -1,0 +1,61 @@
+
+@import views.html.main
+@import models.AllotmentDto
+@(allotments : List[ AllotmentDto],allotId : Integer)
+
+@main("Allotment List",allotId) {
+
+  <br>
+  <Br>
+  <br>
+  <h2> Allotment Details for the Movies and Multiplexes </h2>
+  <br>
+  <br>
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead class="thead-dark">
+            <tr>
+              <th>Allotment Id</th>
+              <th>Multiplex Name</th>
+              <th>Movie Name</th>
+              <th>Available From</th>
+              <th>Available To</th>
+              <th>Screen Name</th>
+              <th>Ticket Cost</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+          @for(movie <- allotments) {
+            <tr>
+              <th scope="row">@movie.allotmentId</th>
+              <td>@movie.multiplexName</td>
+              <td>@movie.movieName</td>
+              <td>@movie.availableFrom</td>
+              <td>@movie.availableTo</td>
+              <td>@movie.screenName</td>
+              <td>@movie.ticketCost</td>
+
+              <td>
+                <a href="@routes.AllotmentController.editAllotmentDetails(movie.getAllotmentId)" class="btn btn-primary btn-md">
+                  <span class="glyphicon glyphicon-pencil"></span> Edit
+                </a>
+              </td>
+              <td>
+
+                <a href="@routes.AllotmentController.removeAllotmentById(movie.getAllotmentId)" class="btn btn-danger btn-md">
+                  <span class="glyphicon glyphicon-remove-circle"></span> Delete
+                </a>
+              </td>
+            </tr>
+          }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+}

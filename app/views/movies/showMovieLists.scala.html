@@ -1,0 +1,65 @@
+
+@import views.html.main
+@import models.MoviesDto
+@(movies : List[ MoviesDto],movieId : Integer)
+
+@main("Movie List",movieId) {
+
+        <br>
+        <Br>
+        <br>
+    <h2> Movies Available </h2>
+    <br>
+    <br>
+    <br>
+<div class="container">
+    <div class="row">
+        <div class="col-12 table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Movie Name</th>
+                        <th>Movie Category</th>
+                        <th>Movie Producer</th>
+                        <th>Movie Director</th>
+                        <th>Movie Release Date</th>
+                        <th>Movie Description</th>
+                        <th>Movie Image</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+            <tbody>
+            @for(movie <- movies) {
+                <tr>
+                    <th scope="row">@movie.id</th>
+                    <td>@movie.movieName</td>
+                    <td>@movie.movieCategory</td>
+                    <td>@movie.movieProducer</td>
+                    <td>@movie.movieDirector</td>
+                    <td>@movie.movieReleaseDate</td>
+                    <td>@movie.movieDesc</td>
+                    <td class="w-25">
+                        <img src="@movie.movieImageUrl"
+                        class="rounded" alt="movieImage" width="200" height="150">
+                    @movie.movieImageUrl</td>
+                    <td>
+                        <a href="@routes.MovieController.editMovieDetails(movie.getId)" class="btn btn-primary btn-md">
+                            <span class="glyphicon glyphicon-pencil"></span> Edit
+                        </a>
+                    </td>
+                    <td>
+
+                        <a href="@routes.MovieController.removeMovieById(movie.getId)" class="btn btn-danger btn-md">
+                            <span class="glyphicon glyphicon-remove-circle"></span> Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    </div>
+</div>
+}

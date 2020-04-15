@@ -1,0 +1,49 @@
+@import views.html.main
+@import helper._
+@import models.AllotmentDto
+@import Utils.ListUtils
+@(allotmentDto: Form[AllotmentDto]
+)(implicit request: Http.Request
+  , messages: play.i18n.Messages,allotId : Integer,movieOptionsList : List[String],multiplexList : List[String])
+@main("Add Allotment Details",allotId) {
+  @helper.form(action = routes.AllotmentController.saveAllotmentDetails(allotId)) {
+    @* CSRF TOKEN SUPPORT *@
+    <form>
+      <div class="col-xs-6" id="div1">
+        <div class="form-group">
+          <div class="col-sm-5">
+            @select(allotmentDto("multiplexName"),options = options(multiplexList),'_label -> "Multiplex's Available",'_showConstraints -> false,'_default -> " --    Please Select  ------    ")
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-5">
+            @select(allotmentDto("movieName"),options = options(movieOptionsList),'_label -> "Movie's Available",'_showConstraints -> false,'_default -> " --    Please Select  ------    ")
+        </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-5">
+          @inputDate(allotmentDto("availableFrom"),Symbol("_label") -> "Available From",  Symbol("placeholder") -> "Ex: 21/04/2020")
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-5">
+          @inputDate(allotmentDto("availableTo"), Symbol("_label") -> "Available To", Symbol("placeholder") -> "Ex: 21/06/2020")
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-5">
+        @inputText(allotmentDto("screenName"),Symbol("_label") -> "Assigned Screen",  Symbol("placeholder") -> "Ex: Screen 1")
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+      </div>
+    </form>
+
+    </body>
+  }
+}

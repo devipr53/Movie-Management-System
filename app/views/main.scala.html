@@ -1,0 +1,80 @@
+@import models.SearchDto
+@(title : String,movieId : Integer )(body: Html)
+<html>
+       <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="@routes.MovieController.displayMoviesList()">Event Management System</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="@routes.MovieController.displayMoviesList()">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Movie
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="@routes.MovieController.displayMoviesList()">
+                                    <i class="glyphicon glyphicon-book"></i> View Movie Details </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="@routes.MovieController.addNewMovies(movieId)">
+                                    <i class="glyphicon glyphicon-plus"></i>Add New Movie Details</a>
+                            </div>
+                        </li>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Multiplex
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item" href="@routes.MultiplexController.displayMultiplexDetails()">View Multiplex Details</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="@routes.MultiplexController.addNewMultiplex(movieId)">Add New Multiplex Details</a>
+
+                            </div>
+                        </li>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Allotment
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="@routes.AllotmentController.displayAllotmentDetails()">View Allocation Details</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="@routes.AllotmentController.addNewAllotment(movieId)">Add New Allocation Details</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <!--<input class="form-control mr-sm-2" type="search" id="searchParam" name="searchParam" placeholder="Search Movie/Multiplex Name" aria-label="Search">-->
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                        <a class="dropdown-item" href="@routes.SearchController.displaySearchPage(movieId)">
+                            <i class="glyphicon glyphicon-plus"></i>Search</a></button>
+                    </form>
+                </div>
+            </nav>
+
+        </header>
+    <head>
+        <title>@title</title>
+
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("css/bootstrap.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("css/bootstrap-theme.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("css/style.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+        <script src="@routes.Assets.versioned("js/jquery-3.2.1.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("js/popper.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("js/bootstrap.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("js/main.js")" type="text/javascript"></script>
+    </head>
+    <body>
+      <div class="container">
+        @body
+      </div>
+    </body>
+</html>

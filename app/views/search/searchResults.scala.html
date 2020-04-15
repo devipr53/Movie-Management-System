@@ -1,0 +1,53 @@
+@import views.html.main
+@import helper._
+@import models.MultiplexDto
+@(searchDet : List[ SearchDto],searchId : Integer)
+@main("Search Details",searchId) {
+  <br>
+  <br>
+  @if(searchDet.size()==0){
+    <h2 style="color:red;">  Oops .. ! Search Details Not Found </h2>
+  }
+  <br>
+  <br>
+  @if(searchDet.size()>0){
+
+  <h2> Results against Searched Data </h2>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12 table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead class="thead-dark">
+            <tr>
+              <th>Multiplex Name</th>
+              <th>Movie Name</th>
+              <th>Movie Image</th>
+              <th>Available From</th>
+              <th>Available To </th>
+              <th>No of Screens</th>
+              <th>Ticket Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+          @for(search <- searchDet) {
+            <tr>
+              <th scope="row">@search.multiplexName</th>
+              <td>@search.movieName</td>
+              <td class="w-25">
+                <img src="@search.movieImageUrl"class="rounded" alt="movieImage" width="200" height="150">
+                @search.movieImageUrl
+              </td>
+              <td>@search.availableFrom</td>
+              <td>@search.availableTo</td>
+              <td>@search.screenName</td>
+              <td>@search.ticketCost</td>
+            </tr>
+          }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  }
+}

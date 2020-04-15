@@ -1,0 +1,48 @@
+@import views.html.main
+@import helper._
+@import models.MoviesDto
+@(allotmentDto: Form[AllotmentDto]
+)(implicit request: Http.Request
+  , messages: play.i18n.Messages,allotId : Integer)
+@main("Edit Allotment Details",allotId) {
+  @helper.form(action = routes.AllotmentController.saveAllotmentDetails(allotId)) {
+    @* CSRF TOKEN SUPPORT *@
+    <form>
+      <div class="col-xs-6" id="div1">
+        <div class="form-group">
+          <div class="col-sm-5">
+          @inputText(allotmentDto("multiplexName"), Symbol("_label") -> "Multiplex Name", Symbol("placeholder") -> "Ex: Fun Mall..")
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-5">
+          @inputText(allotmentDto("movieName"),Symbol("_label") -> "Movie Name",  Symbol("placeholder") -> "Ex: Master..")
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-5">
+          @inputDate(allotmentDto("availableFrom"),Symbol("_label") -> "Available From",  Symbol("placeholder") -> "Ex: 21/04/2020")
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-5">
+          @inputDate(allotmentDto("availableTo"), Symbol("_label") -> "Available To", Symbol("placeholder") -> "Ex: 21/06/2020")
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-5">
+        @inputText(allotmentDto("screenName"),Symbol("_label") -> "Movie Release Date",  Symbol("placeholder") -> "Ex: Screen 1")
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </div>
+    </form>
+
+    </body>
+  }
+}
