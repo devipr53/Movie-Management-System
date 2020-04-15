@@ -1,15 +1,11 @@
 package service;
 
-import entities.SearchDetails;
-import models.SearchDto;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.modelmapper.ModelMapper;
 import repo.SearchRepo;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Singleton
 public class SearchService {
@@ -19,7 +15,7 @@ public class SearchService {
     @Inject
     SearchRepo searchRepo;
 
-    // To get all available movies and multiplex details by search param
+    /*// To get all available movies and multiplex details by search param
     public List<SearchDto> getSearchResults(String searchParam){
         List<SearchDto> searchResults= new ArrayList<>();
         List<SearchDetails> searchDetailsList=this.searchRepo.getSearchResults(searchParam);
@@ -28,5 +24,10 @@ public class SearchService {
                         search.getAvailableTo(),search.getScreenName(),search.getTicketCost(),search.getMovieImageUrl()))
                 .collect(Collectors.toList());
         return searchResults;
+    }*/
+
+    //To Respond Back to Rest API Search
+    public JsonNode getAPISearchResult(String searchString,String searchParam) {
+        return searchRepo.getAPISearchResult(searchString, searchParam);
     }
 }

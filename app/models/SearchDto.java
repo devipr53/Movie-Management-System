@@ -10,7 +10,6 @@ public class SearchDto {
     public String screenName;
     public String ticketCost;
     public String movieImageUrl;
-
     public SearchDto(){}
     public SearchDto(String searchParam, String searchType, String multiplexName, String movieName, String availableFrom, String availableTo, String screenName, String ticketCost, String movieImageUrl) {
         this.searchParam = searchParam;

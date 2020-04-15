@@ -45,5 +45,6 @@ GET     /allot/removeAllotmentById         controllers.AllotmentController.remov
 
 # Search Routes
 GET     /search                             controllers.SearchController.displaySearchPage(request: Request,id: Integer)
+GET     /searchResults                      controllers.SearchController.displaySearchResults(request: Request,id: Integer)
 +nocsrf
-POST    /searchByParam                      controllers.SearchController.displaySearchResults(request: Request,id: Integer)
+GET    /api/search                         controllers.SearchRestController.search(searchType:String,searchParam:String)
