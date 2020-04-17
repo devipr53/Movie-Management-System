@@ -7,6 +7,7 @@ public class MultiplexDto {
     public String noOfScreens;
     public String ticketCost;
     public int movieId;
+    public String editInd;
 
     public MultiplexDto(){
 
@@ -66,6 +67,14 @@ public class MultiplexDto {
 
     public void setMovieId(int movieId) {
         this.movieId = movieId;
+    }
+
+    public String getEditInd() {
+        return editInd;
+    }
+
+    public void setEditInd(String editInd) {
+        this.editInd = editInd;
     }
 }
 

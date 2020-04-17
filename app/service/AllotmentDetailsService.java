@@ -4,6 +4,7 @@ import Utils.ListUtils;
 import entities.AllotmentDetails;
 import entities.MovieDetails;
 import entities.MultiplexDetails;
+import entities.MultiplexScreenDetails;
 import models.AllotmentDto;
 import org.modelmapper.ModelMapper;
 import repo.AllotmentRepo;
@@ -53,6 +54,7 @@ public class AllotmentDetailsService {
     public List<String> getAllMovieNames(){
         List<String> movieNames=new ArrayList<>();
         List<MovieDetails> moviesList= this.listUtils.getMovielist();
+        movieNames.add("----    Please Select  ----");
         if(moviesList.size()>0){
             for(int i=0;i<moviesList.size();i++){
                 movieNames.add(moviesList.get(i).getMovieName());
@@ -65,6 +67,7 @@ public class AllotmentDetailsService {
     public List<String> getAllMultiplexNames(){
         List<String> multiplexNames=new ArrayList<>();
         List<MultiplexDetails> multiplexList= this.listUtils.getMultiplexlist();
+        multiplexNames.add("----    Please Select  ----");
         if(multiplexList.size()>0){
             for(int i=0;i<multiplexList.size();i++){
                 multiplexNames.add(multiplexList.get(i).getMultiplexName());
@@ -73,5 +76,21 @@ public class AllotmentDetailsService {
         }
         return multiplexNames;
     }
+
+    public List<String> getScreenNamesByMultiplexName(String multiplexName){
+        System.out.println("Screen");
+        List<String> screenNames=new ArrayList<>();
+        List<MultiplexScreenDetails> screenDetailsList= this.listUtils.findScreenDetailsByMultiName(multiplexName);
+        screenNames.add("----    Please Select  ----");
+        System.out.println("screenDetailsList "+screenDetailsList.toString());
+        if(screenDetailsList!=null){
+            for(int i=0;i<screenDetailsList.size();i++){
+                screenNames.add(screenDetailsList.get(i).getScreenName());
+                System.out.println("Screen Name : "+screenNames.get(i));
+            }
+        }
+        return screenNames;
+    }
+
 
 }

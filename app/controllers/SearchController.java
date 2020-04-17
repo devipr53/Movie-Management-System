@@ -37,19 +37,18 @@ public class SearchController extends Controller {
     @Inject
     MultiplexDetailsService multiplexDetailsService;
 
-    public Result displaySearchResults(Http.Request request,Integer searchId){
+    public Result displaySearchResults(Http.Request request){
         Form<SearchDto> searchDtoForm = this.formFactory.form(SearchDto.class).bindFromRequest(request);
         String searchType=searchDtoForm.get().getSearchType();
-        System.out.println("Search Type :"+searchType);
+        //System.out.println("Search Type :"+searchType);
         String searchParam=searchDtoForm.get().getSearchParam();
-        System.out.println("Search Param :"+searchParam);
+        //System.out.println("Search Param :"+searchParam);
         if(searchType!= null && searchType.equalsIgnoreCase("Search By Movie Name")){
-            System.out.println("hi");
             List<MoviesDto> movies =  this.movieDetailsService.getMovielistByName(searchParam);
-            return ok(views.html.movies.showMovieLists.render(movies,searchId));
+            return ok(views.html.movies.showMovieLists.render(movies,0));
         }else if(searchType!= null && searchType.equalsIgnoreCase("Search By Multiplex Name")){
             List<MultiplexDto> multiplexDet=this.multiplexDetailsService.getMultiplexlistByName(searchParam);
-            return ok(views.html.multiplex.showMultiplexDetails.render(multiplexDet,searchId));
+            return ok(views.html.multiplex.showMultiplexDetails.render(multiplexDet,0));
         }
         return ok();
     }

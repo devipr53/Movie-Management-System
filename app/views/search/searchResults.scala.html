@@ -1,15 +1,13 @@
 @import views.html.main
-@import helper._
-@import models.MultiplexDto
 @(searchDet : List[ SearchDto],searchId : Integer)
 @main("Search Details",searchId) {
   <br>
   <br>
   @if(searchDet.size()==0){
-    <h2 style="color:red;">  Oops .. ! Search Details Not Found </h2>
+    <div class="jumbotron">
+      <h1 style="color:red;">  Oops .. ! Search Details Not Found </h1>
+    </div>
   }
-  <br>
-  <br>
   @if(searchDet.size()>0){
 
   <h2> Results against Searched Data </h2>

@@ -1,6 +1,6 @@
-@import views.html.main
 @import helper._
 @import models.MoviesDto
+@import views.html.main
 @(moviesDto: Form[MoviesDto]
 )(implicit request: Http.Request
         , messages: play.i18n.Messages,movieId : Integer)
@@ -11,48 +11,86 @@
                 <div class="col-xs-6" id="div1">
                     <div class="form-group">
                         <div class="col-sm-5">
-                          @inputText(moviesDto("movieName"), Symbol("_label") -> "Movie Name", Symbol("placeholder") -> "Enter Movie name")
+                          @inputText(moviesDto("movieName"), Symbol("_label") -> "Movie Name",
+                              Symbol("placeholder") -> "Enter Movie name",
+                              'onChange->"return validateMovieDetails()")
+                            <span id="invalidMovieName" style = "font-size: 15px; font-weight: bold;color:red;display:none;">
+                                Please Enter the valid Movie Name
+                            </span>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-5">
-                            @inputText(moviesDto("movieCategory"),Symbol("_label") -> "Movie Category",  Symbol("placeholder") -> "Ex: Comedy,Thriller")
+                            @inputText(moviesDto("movieCategory"),Symbol("_label") -> "Movie Category",
+                                Symbol("placeholder") -> "Ex: Comedy,Thriller",
+                                'onChange->"return validateMovieDetails()")
+                            <span id="invalidMovieCategory" style = "font-size: 15px; font-weight: bold;color:red;display:none;">
+                                Please Enter the valid Movie Category
+                            </span>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-5">
-                            @inputText(moviesDto("movieProducer"),Symbol("_label") -> "Movie Producer",  Symbol("placeholder") -> "Enter Movie Producer name")
+                            @inputText(moviesDto("movieProducer"),Symbol("_label") -> "Movie Producer",
+                                Symbol("placeholder") -> "Enter Movie Producer name",
+                                'onChange->"return validateMovieDetails()")
+                            <span id="invalidMovieProducer" style = "font-size: 15px; font-weight: bold;color:red;display:none;">
+                                Please Enter the valid Producer Name
+                            </span>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-5">
-                            @inputText(moviesDto("movieDirector"), Symbol("_label") -> "Movie Director", Symbol("placeholder") -> "Enter Movie Director name")
+                            @inputText(moviesDto("movieDirector"), Symbol("_label") -> "Movie Director",
+                                Symbol("placeholder") -> "Enter Movie Director name",
+                                'onChange->"return validateMovieDetails()")
+                            <span id="invalidMovieDirector" style = "font-size: 15px; font-weight: bold;color:red;display:none;">
+                                Please Enter the valid Director Name
+                            </span>
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-6" id="div2">
                     <div class="form-group">
                         <div class="col-sm-5">
-                            @inputText(moviesDto("movieReleaseDate"),Symbol("_label") -> "Movie Release Date",  Symbol("placeholder") -> "Enter Movie Release Date")
+                            @inputText(moviesDto("movieReleaseDate"),Symbol("_label") -> "Movie Release Date",
+                                Symbol("placeholder") -> "Enter Movie Release Date",
+                                'onChange->"return validateMovieDetails()")
+                            <span id="invalidMovieReleaseDate" style = "font-size: 15px; font-weight: bold;color:red;display:none;">
+                                Please Enter the valid Movie Release Date
+                            </span>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-5">
-                            @textarea(moviesDto("movieDesc"),Symbol("_label") -> "Movie Description",  Symbol("placeholder") -> "Enter Movie Description")
+                            @textarea(moviesDto("movieDesc"),Symbol("_label") -> "Movie Description",
+                                Symbol("placeholder") -> "Enter Movie Description",
+                                'onChange->"return validateMovieDetails()")
+                            <span id="invalidMovieDesc" style = "font-size: 15px; font-weight: bold;color:red;display:none;">
+                                Please Enter the valid Movie Description
+                            </span>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-5">
-                            @inputText(moviesDto("movieImageUrl"), Symbol("_label") -> "Movie Image", Symbol("placeholder") -> "Enter Movie Image Url")
+                            @inputText(moviesDto("movieImageUrl"), Symbol("_label") -> "Movie Image",
+                                Symbol("placeholder") -> "Enter Movie Image Url",
+                                'onChange->"return validateMovieDetails()")
+                            <span id="invalidMovieImageUrl" style = "font-size: 15px; font-weight: bold;color:red;display:none;">
+                                Please Enter the valid Movie Image Url
+                            </span>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="submit" class="btn btn-success" id="movieSubmit" disabled="true">Submit</button>
                     </div>
                 </div>
             </form>
-
+            <span id="note" style = "font-size: 15px; font-weight: bold;color:red;">
+                Please Note After valid Input Only Submit Button will be enabled.<br>
+                Ex: If already exist movie name given submit button won't be enabled.
+            </span>
         }
     }

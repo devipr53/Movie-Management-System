@@ -1,43 +1,66 @@
-@import views.html.main
 @import helper._
 @import models.MultiplexDto
+@import views.html.main
 @(multiplex: Form[MultiplexDto]
 )(implicit request: Http.Request
   , messages: play.i18n.Messages,multiplexId : Integer)
 @main("Add Multiplex Details",multiplexId) {
-  @helper.form(action = routes.MultiplexController.saveMultiplexDetails(multiplexId)) {
+  @helper.form(action = routes.MultiplexController.saveMultiplexDetails(multiplexId,"N")) {
     <h2> Multiplex Details</h2>
     @* CSRF TOKEN SUPPORT *@
     <form>
       <div class="col-xs-6" id="div1">
         <div class="form-group">
           <div class="col-sm-5">
-          @inputText(multiplex("multiplexName"), Symbol("_label") -> "Multiplex Name", Symbol("placeholder") -> "Enter Multiplex name")
+          @inputText(multiplex("multiplexName"), Symbol("_label") -> "Multiplex Name",
+            Symbol("placeholder") -> "Enter Multiplex name",
+            'onChange->"return validateMultiplexDetails()")
+            <span id="invalidMultiplexName" style = "font-size: 15px; font-weight: bold;color:red;display:none;">
+              Please Enter the valid Multiplex Name
+            </span>
           </div>
         </div>
         <div class="form-group">
           <div class="col-sm-5">
-          @textarea(multiplex("multiplexAddress"),Symbol("_label") -> "Multiplex Address",  Symbol("placeholder") -> "Enter Address")
+          @textarea(multiplex("multiplexAddress"),Symbol("_label") -> "Multiplex Address",
+            Symbol("placeholder") -> "Enter Address",
+            'onChange->"return validateMultiplexDetails()")
+            <span id="invalidMultiplexAddress" style = "font-size: 15px; font-weight: bold;color:red;display:none;">
+              Please Enter the valid Multiplex Address
+            </span>
           </div>
         </div>
         <div class="form-group">
           <div class="col-sm-5">
-          @inputText(multiplex("noOfScreens"),Symbol("_label") -> "No. Of Screens",  Symbol("placeholder") -> "Enter No. Of Screens in Multiplex")
+          @inputText(multiplex("noOfScreens"),Symbol("_label") -> "No. Of Screens",
+            Symbol("placeholder") -> "Enter No. Of Screens in Multiplex",
+            'onkeypress->"return isNumber(event)",
+            'onChange->"return validateMultiplexDetails()")
+            <span id="invalidNoOfScreens" style = "font-size: 15px; font-weight: bold;color:red;display:none;">
+              Please Enter the valid Screen Numbers
+            </span>
           </div>
         </div>
         <div class="form-group">
           <div class="col-sm-5">
-          @inputText(multiplex("ticketCost"), Symbol("_label") -> "Ticket Cost", Symbol("placeholder") -> "Enter Ticket Cost")
+          @inputText(multiplex("ticketCost"), Symbol("_label") -> "Ticket Cost",
+            Symbol("placeholder") -> "Enter Ticket Cost",
+            'onkeypress->"return isNumber(event)",
+            'onChange->"return validateMultiplexDetails()")
+            <span id="invalidTicketCost" style = "font-size: 15px; font-weight: bold;color:red;display:none;">
+              Please Enter the valid Ticket Cost
+            </span>
           </div>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-          <button type="submit" class="btn btn-success">Submit</button>
+          <button type="submit" class="btn btn-success" id="multiplexSubmit" disabled="true">Submit</button>
         </div>
       </div>
     </form>
-
-    </body>
+    <span id="note" style = "font-size: 15px; font-weight: bold;color:red;">
+      Please Note After valid Input Only Submit Button will be enabled.
+    </span>
   }
 }

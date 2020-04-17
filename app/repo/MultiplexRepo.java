@@ -1,6 +1,7 @@
 package repo;
 
 import entities.MultiplexDetails;
+import entities.MultiplexScreenDetails;
 import play.db.jpa.JPAApi;
 
 import javax.inject.Inject;
@@ -32,6 +33,7 @@ public class MultiplexRepo {
                 return multiplexList;
             });
         }
+
         public MultiplexDetails findMultiplexDetailsById(Integer multiplexId) {
             return this.wrap(entityManager -> entityManager.createQuery("select m from MultiplexDetails m where m.multiplexId=" + multiplexId , MultiplexDetails.class).getSingleResult());
         }
@@ -43,7 +45,7 @@ public class MultiplexRepo {
         }
 
         public MultiplexDetails insertOrUpdateMultiplexDetails(MultiplexDetails multiplexDetails) {
-            return this.wrap(eM -> {
+          return this.wrap(eM -> {
                 if (multiplexDetails.getMultiplexId()== null) {
                     eM.persist(multiplexDetails);
                 } else {
@@ -53,4 +55,20 @@ public class MultiplexRepo {
             });
         }
 
+        public MultiplexScreenDetails insertOrUpdateScreenDetails(MultiplexScreenDetails screen) {
+            return this.wrap(eM -> {
+                if (screen.getScreenId() == null) {
+                    eM.persist(screen);
+                } else {
+                    eM.merge(screen);
+                }
+                return screen;
+            });
+        }
+
+        public void deleteScreenByMuliplexById(Integer multiplexId) {
+            this.wrap(entityManager ->
+                    entityManager.createQuery("delete from MultiplexScreenDetails m where m.multiplexId=" + multiplexId).executeUpdate()
+            );
+        }
 }

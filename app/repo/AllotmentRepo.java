@@ -47,14 +47,4 @@ public class AllotmentRepo {
         });
     }
 
-
-
- /*   public Seq<String> getMovielistOptions() {
-        List<MovieDetails> moviesList= getMovielistOpts();
-        List<String> movies=new ArrayList<String>();
-        for(Integer i=0; i<=moviesList.size(); i++){
-            movies.add(moviesList.get(i).getMovieName());
-        }
-        return JavaConverters.asScalaIteratorConverter(movies.iterator()).asScala().toSeq();
-    }*/
 }

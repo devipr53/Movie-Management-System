@@ -1,10 +1,10 @@
 package interceptors;
 
+import Utils.ExceptionEmailHandler;
 import annotations.Catch;
 import play.mvc.Action;
 import play.mvc.Http;
 import play.mvc.Result;
-import Utils.ExceptionEmailHandler;
 
 import java.util.concurrent.CompletionStage;
 

@@ -29,7 +29,7 @@ GET     /multiplex/list                        controllers.MultiplexController.d
 GET     /multiplex/addNewMultiplex             controllers.MultiplexController.addNewMultiplex(request: Request,id: Integer)
 +nocsrf
 POST    /multiplex/addNewMultiplex             controllers.MultiplexController.addNewMultiplex(request: Request,id: Integer)
-POST    /multiplex/updateMultiplexById         controllers.MultiplexController.saveMultiplexDetails(request: Request,id: Integer)
+POST    /multiplex/updateMultiplexById         controllers.MultiplexController.saveMultiplexDetails(request: Request,id: Integer,editInd : String)
 GET     /multiplex/editMultiplexDetails        controllers.MultiplexController.editMultiplexDetails(request: Request,id: Integer)
 GET     /multiplex/removeMultiplexById         controllers.MultiplexController.removeMultiplexById(request: Request,id: Integer)
 
@@ -42,9 +42,10 @@ POST    /allot/addNewAllotment             controllers.AllotmentController.addNe
 POST    /allot/updateAllotmentById         controllers.AllotmentController.saveAllotmentDetails(request: Request,id: Integer)
 GET     /allot/editAllotmentDetails        controllers.AllotmentController.editAllotmentDetails(request: Request,id: Integer)
 GET     /allot/removeAllotmentById         controllers.AllotmentController.removeAllotmentById(request: Request,id: Integer)
+GET     /allot/getScreenNamesForMultiplex         controllers.AllotmentController.getScreenNamesForMultiplex(request: Request,searchParam:String)
 
 # Search Routes
 GET     /search                             controllers.SearchController.displaySearchPage(request: Request,id: Integer)
-GET     /searchResults                      controllers.SearchController.displaySearchResults(request: Request,id: Integer)
+GET     /search/searchResults               controllers.SearchController.displaySearchResults(request: Request)
 +nocsrf
 GET    /api/search                         controllers.SearchRestController.search(searchType:String,searchParam:String)

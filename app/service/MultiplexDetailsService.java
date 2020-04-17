@@ -1,6 +1,7 @@
 package service;
 
 import entities.MultiplexDetails;
+import entities.MultiplexScreenDetails;
 import models.MultiplexDto;
 import org.modelmapper.ModelMapper;
 
@@ -18,8 +19,10 @@ public class MultiplexDetailsService {
     @Inject
     ModelMapper mapper;
 
-    public MultiplexDto addMultiplexDetails(MultiplexDto multiplexDto) {
-        return mapper.map(multiplexRepo.insertOrUpdateMultiplexDetails(mapper.map(multiplexDto, MultiplexDetails.class)), MultiplexDto.class);
+     public MultiplexDto addMultiplexDetails(MultiplexDto multiplexDto) {
+         MultiplexDetails multiDetails=multiplexRepo.insertOrUpdateMultiplexDetails(mapper.map(multiplexDto, MultiplexDetails.class));
+         addMultiplexScreenDetails(multiDetails.getMultiplexId(),Integer.parseInt(multiDetails.getNoOfScreens()),multiplexDto.getEditInd());
+         return mapper.map(multiDetails, MultiplexDto.class);
     }
 
     // To get all available multiplex
@@ -48,5 +51,29 @@ public class MultiplexDetailsService {
 
     public MultiplexDto findMultiplexDetailsById(Integer multiplexId) {
         return mapper.map(this.multiplexRepo.findMultiplexDetailsById(multiplexId), MultiplexDto.class);
+    }
+
+    public List<MultiplexScreenDetails> generateScreenNames(int multiId,int noOfScreens){
+        List<MultiplexScreenDetails> screenList =new ArrayList<>();
+        if(multiId > 0 && noOfScreens> 0){
+            for (int i=0;i<noOfScreens;i++){
+                String screenName= "Screen "+(i+1);
+                screenList.add(new MultiplexScreenDetails(multiId,screenName));
+            }
+        }
+        System.out.println("Screen LIst :"+screenList.toString());
+        return screenList;
+    }
+
+    public void addMultiplexScreenDetails(int multiId,int noOfScreens,String editInd){
+        System.out.println("edit Ind : "+editInd);
+        if(editInd != null && editInd.equalsIgnoreCase("Y")){
+            System.out.println("edit multiId : "+multiId);
+            this.multiplexRepo.deleteScreenByMuliplexById(multiId);
+        }
+        List<MultiplexScreenDetails> screenList=generateScreenNames(multiId,noOfScreens);
+        for(MultiplexScreenDetails screenDetails : screenList){
+            this.multiplexRepo.insertOrUpdateScreenDetails(screenDetails);
+        }
     }
 }

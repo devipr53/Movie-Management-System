@@ -48,21 +48,34 @@ public class MultiplexController extends Controller {
     }
 
     // action method to save new movie details
-    public Result saveMultiplexDetails(Http.Request request,Integer multiplexId) {
+    public Result saveMultiplexDetails(Http.Request request,Integer multiplexId,String editInd) {
+
+        //System.out.println("update multiplexId Id : "+multiplexId);
         Form<MultiplexDto> multiplexForm = this.formFactory.form(MultiplexDto.class).bindFromRequest(request);
+        //System.out.println("edit Ind con : "+editInd);
         if (multiplexForm.hasErrors()) {
             logger.error("errors = {}", multiplexForm.errors());
             request.flash().adding("failed", "Constraints not satisfied!!!");
             return badRequest(views.html.multiplex.addNewMultiplex.render(multiplexForm, request, messagesApi.preferred(request),multiplexId));
         }
-        //multiplexForm.get().setMultiplexId(multiplexId);
+        multiplexForm.get().setMultiplexId(multiplexId);
+        multiplexForm.get().setEditInd(editInd);
+        int noOfScreens=Integer.parseInt(multiplexForm.get().getNoOfScreens());
+		List<MultiplexDto> multiplexList=this.multiplexDetailsService.getMultiplexlistByName(multiplexForm.get().getMultiplexName());
+		if(multiplexList.size()>0 && !editInd.equalsIgnoreCase("Y")){
+            request.flash().adding("error", "Multiplex Already Exists");
+            return ok(views.html.multiplex.addNewMultiplex.render(multiplexForm,request, messagesApi.preferred(request),multiplexId));
+        }
         this.multiplexDetailsService.addMultiplexDetails(multiplexForm.get());
+       // int multiId=this.multiplexDetailsService.getMultiIdForScreenSave(multiplexForm.get());
+       // System.out.println("Multiplex ID to save for Screen is  :" +multiId + "And no of Screen is : "+noOfScreens);
+       // this.multiplexDetailsService.addMultiplexScreenDetails(multiId,noOfScreens);
         request.flash().adding("success", "Multiplex Details Added Successfully");
         return redirect(routes.MultiplexController.displayMultiplexDetails());
     }
 
     public Result removeMultiplexById(Http.Request request,Integer multiplexId) {
-        System.out.println("delete multiplexId Id : "+multiplexId);
+       // System.out.println("delete multiplexId Id : "+multiplexId);
         this.multiplexDetailsService.removeMultiplexById(multiplexId);
         request.flash().adding("success", "Multiplex Details Deleted Successfully");
         return redirect(routes.MultiplexController.displayMultiplexDetails());
@@ -73,6 +86,7 @@ public class MultiplexController extends Controller {
         if(multiplexForm==null){
             //return notFound(_404.render());
         }
+        multiplexForm.get().setEditInd("Y");
         return ok(views.html.multiplex.editMultiplexDetails.render(multiplexForm,request, messagesApi.preferred(request),multiplexId));
     }
 }

@@ -51,19 +51,26 @@ public class MovieController extends Controller {
     // action method to save new movie details
     public Result saveMovieDetails(Http.Request request,Integer movieId) {
         Form<MoviesDto> movieModelForm = this.formFactory.form(MoviesDto.class).bindFromRequest(request);
+        //System.out.println("movieModelForm.get().getMovieName() : "+movieModelForm.get().getMovieName());
+        List<MoviesDto> movieList=this.movieDetailsService.getMovielistByName(movieModelForm.get().getMovieName());
         if (movieModelForm.hasErrors()) {
             logger.error("errors = {}", movieModelForm.errors());
             request.flash().adding("failed", "Constraints not satisfied!!!");
             return badRequest(views.html.movies.addNewMovies.render(movieModelForm, request, messagesApi.preferred(request),movieId));
         }
-        //movieModelForm.get().setId(movieId);
+        if(movieList.size()>0){
+            request.flash().adding("error", "Movie Already Exists");
+            return ok(views.html.movies.addNewMovies.render(movieModelForm,request, messagesApi.preferred(request),movieId)).flashing("warning", "Movie Already Exists");
+        }
+        movieModelForm.get().setId(movieId);
+        //System.out.println(" movieModelForm movieId : "+movieModelForm.get().getId());
         this.movieDetailsService.addMovieDetails(movieModelForm.get());
         request.flash().adding("success", "Movie Added Successfully");
         return redirect(routes.MovieController.displayMoviesList());
     }
 
     public Result removeMovieById(Http.Request request,Integer movieId) {
-        System.out.println("delete movie Id : "+movieId);
+       // System.out.println("delete movie Id : "+movieId);
         movieDetailsService.removeMovieById(movieId);
         request.flash().adding("success", "Movie Deleted Successfully");
         return redirect(routes.MovieController.displayMoviesList());

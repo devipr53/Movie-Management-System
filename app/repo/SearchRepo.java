@@ -38,8 +38,8 @@ public class SearchRepo {
     }*/
 
     public JsonNode getAPISearchResult(String searchType, String searchParam) {
-        System.out.println(" Search Type: "+searchType);
-        System.out.println(" Search Param: "+searchParam);
+        //System.out.println(" Search Type: "+searchType);
+       // System.out.println(" Search Param: "+searchParam);
         ObjectMapper mapper = new ObjectMapper();
         JsonNode responseObject = null;
         if(searchType!= null && searchType.equalsIgnoreCase("movie")){
@@ -49,7 +49,7 @@ public class SearchRepo {
             responseObject = mapper.convertValue(this.wrap(entityManager -> entityManager.createQuery("select p from MultiplexDetails p where p.multiplexName like lower(:searchParam)", MultiplexDetails.class)
                     .setParameter("searchParam", "%" + searchParam + "%").getResultList()), JsonNode.class);
         }
-        System.out.println("Response Object :"+responseObject);
+       // System.out.println("Response Object :"+responseObject);
         return responseObject;
     }
 }

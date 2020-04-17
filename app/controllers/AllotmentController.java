@@ -13,6 +13,7 @@ import play.mvc.Result;
 import service.AllotmentDetailsService;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 @Catch(send = true)
@@ -28,9 +29,11 @@ public class AllotmentController extends Controller {
     @Inject
     AllotmentDetailsService allotmentDetailsService;
 
-    List<String> movieOptions;
+    List<String> movieOptions= new ArrayList<>();
 
-    List<String> multiplexOptions;
+    List<String> multiplexOptions= new ArrayList<>();
+
+    List<String> screenOptions= new ArrayList<>();
 
     public Result displayAllotmentDetails(){
         List<AllotmentDto> allotmentDet =  this.allotmentDetailsService.getAllAllotmentDetails();
@@ -40,9 +43,9 @@ public class AllotmentController extends Controller {
     public Result addNewAllotment(Http.Request request, Integer allotId){
         movieOptions= this.allotmentDetailsService.getAllMovieNames();
         multiplexOptions=this.allotmentDetailsService.getAllMultiplexNames();
-        System.out.println("Movie options : "+movieOptions.size());
+        screenOptions=this.allotmentDetailsService.getScreenNamesByMultiplexName("");
         Form<AllotmentDto> allotmentForm = formFactory.form(AllotmentDto.class);
-        return ok(views.html.allotment.addNewAllotment.render(allotmentForm,request, messagesApi.preferred(request),allotId,movieOptions,multiplexOptions));
+        return ok(views.html.allotment.addNewAllotment.render(allotmentForm,request, messagesApi.preferred(request),allotId,movieOptions,multiplexOptions,screenOptions));
     }
 
     // action method to generate a view for new movie entry form
@@ -51,11 +54,10 @@ public class AllotmentController extends Controller {
         int allotId=0;
         movieOptions= this.allotmentDetailsService.getAllMovieNames();
         multiplexOptions=this.allotmentDetailsService.getAllMultiplexNames();
-        System.out.println("Movie options1 : "+movieOptions.size());
         Form<AllotmentDto> allotmentForm = formFactory.form(AllotmentDto.class);
         // return response :  render-view
        // return ok(views.html.allotment.addNewAllotment.render(allotmentForm,movieListOptions, request, messagesApi.preferred(request),allotId));
-        return ok(views.html.allotment.addNewAllotment.render(allotmentForm,request, messagesApi.preferred(request),allotId,movieOptions,multiplexOptions));
+        return ok(views.html.allotment.addNewAllotment.render(allotmentForm,request, messagesApi.preferred(request),allotId,movieOptions,multiplexOptions,screenOptions));
     }
 
     // action method to save new movie details
@@ -65,7 +67,7 @@ public class AllotmentController extends Controller {
             logger.error("errors = {}", allotmentForm.errors());
             request.flash().adding("failed", "Constraints not satisfied!!!");
             //return badRequest(views.html.allotment.addNewAllotment.render(allotmentForm,movieListOptions, request, messagesApi.preferred(request),allotId));
-            return badRequest(views.html.allotment.addNewAllotment.render(allotmentForm, request, messagesApi.preferred(request),allotId,movieOptions,multiplexOptions));
+            return badRequest(views.html.allotment.addNewAllotment.render(allotmentForm, request, messagesApi.preferred(request),allotId,movieOptions,multiplexOptions,screenOptions));
         }
         allotmentForm.get().setAllotmentId(allotId);
         this.allotmentDetailsService.addAllotmentDetails(allotmentForm.get());
@@ -74,7 +76,7 @@ public class AllotmentController extends Controller {
     }
 
     public Result removeAllotmentById(Http.Request request,Integer allotId) {
-        System.out.println("delete allotId Id : "+allotId);
+       // System.out.println("delete allotId Id : "+allotId);
         this.allotmentDetailsService.removeAllotmentById(allotId);
         request.flash().adding("success", "Allotment Deleted Successfully");
         return redirect(routes.AllotmentController.displayAllotmentDetails());
@@ -86,6 +88,22 @@ public class AllotmentController extends Controller {
             //return notFound(_404.render());
         }
        // return ok(views.html.allotment.addNewAllotment.render(movieModelForm,movieListOptions,request, messagesApi.preferred(request),allotId));
-        return ok(views.html.allotment.addNewAllotment.render(allotmentForm,request, messagesApi.preferred(request),allotId,movieOptions,multiplexOptions));
+        return ok(views.html.allotment.editAllotmentDetails.render(allotmentForm,request, messagesApi.preferred(request),allotId,movieOptions,multiplexOptions,screenOptions));
+    }
+
+    public Result getScreenNamesForMultiplex(Http.Request request,String multiplexName){
+        System.out.println("screen multiplexName : "+multiplexName);
+        Form<AllotmentDto> allotmentForm = this.formFactory.form(AllotmentDto.class).bindFromRequest(request);
+        //System.out.println("allotmentForm : "+allotmentForm.toString());
+        screenOptions=this.allotmentDetailsService.getScreenNamesByMultiplexName(multiplexName);
+
+        System.out.println("screen multiplexName before  removal : "+multiplexOptions.toString());
+
+        int lastIndex=multiplexOptions.size()-1;
+      // System.out.println("Last Index : "+lastIndex);
+        multiplexOptions.remove(multiplexName);
+        multiplexOptions.add(0, multiplexName );
+       // System.out.println("screen multiplexName after removal: "+multiplexOptions.toString());
+        return ok(views.html.allotment.addNewAllotment.render(allotmentForm,request, messagesApi.preferred(request),null,movieOptions,multiplexOptions,screenOptions));
     }
 }

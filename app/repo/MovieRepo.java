@@ -20,14 +20,6 @@ public class MovieRepo {
         return this.jpaApi.withTransaction(function);
     }
 
-   /* @Transactional
-    public MovieDetails addNewMovie(MovieDetails moviePOJO){
-        this.jpaApi.withTransaction(entityManager -> {
-            entityManager.persist(moviePOJO);
-        });
-        return moviePOJO;
-    }*/
-
     public List<MovieDetails> getMovielist(){
         return this.wrap(entityManager -> {
             List<MovieDetails> movieList  =  entityManager.createQuery("select p from MovieDetails p", MovieDetails.class).getResultList();
@@ -54,10 +46,9 @@ public class MovieRepo {
     }
 
     public List<MovieDetails> getMovielistOpts(){
-        System.out.println("Hi");
         return this.wrap(entityManager -> {
             List<MovieDetails> movieList  =  entityManager.createQuery("select p.movieName from MovieDetails p", MovieDetails.class).getResultList();
-            System.out.println("Movie Size :"+movieList.size());
+            //System.out.println("Movie Size :"+movieList.size());
             return movieList;
         });
     }
