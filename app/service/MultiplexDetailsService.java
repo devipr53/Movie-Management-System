@@ -61,7 +61,6 @@ public class MultiplexDetailsService {
                 screenList.add(new MultiplexScreenDetails(multiId,screenName));
             }
         }
-        System.out.println("Screen LIst :"+screenList.toString());
         return screenList;
     }
 

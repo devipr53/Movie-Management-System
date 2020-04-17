@@ -58,7 +58,6 @@ public class AllotmentDetailsService {
         if(moviesList.size()>0){
             for(int i=0;i<moviesList.size();i++){
                 movieNames.add(moviesList.get(i).getMovieName());
-                System.out.println("Movie Name : "+moviesList.get(i).getMovieName());
             }
         }
         return movieNames;
@@ -71,14 +70,12 @@ public class AllotmentDetailsService {
         if(multiplexList.size()>0){
             for(int i=0;i<multiplexList.size();i++){
                 multiplexNames.add(multiplexList.get(i).getMultiplexName());
-                System.out.println("Multiplex Name : "+multiplexList.get(i).getMultiplexName());
             }
         }
         return multiplexNames;
     }
 
     public List<String> getScreenNamesByMultiplexName(String multiplexName){
-        System.out.println("Screen");
         List<String> screenNames=new ArrayList<>();
         List<MultiplexScreenDetails> screenDetailsList= this.listUtils.findScreenDetailsByMultiName(multiplexName);
         screenNames.add("----    Please Select  ----");
@@ -86,7 +83,6 @@ public class AllotmentDetailsService {
         if(screenDetailsList!=null){
             for(int i=0;i<screenDetailsList.size();i++){
                 screenNames.add(screenDetailsList.get(i).getScreenName());
-                System.out.println("Screen Name : "+screenNames.get(i));
             }
         }
         return screenNames;

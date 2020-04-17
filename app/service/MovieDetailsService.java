@@ -19,16 +19,6 @@ public class MovieDetailsService {
     @Inject
     ModelMapper mapper;
 
-    /*//To Add new movie to the database
-    public void addNewMovie(MoviesDto movieDto){
-        // map model -> entity
-        MovieDetails moviePOJO=new MovieDetails(movieDto.getMovieName(),movieDto.getMovieCategory(),
-                movieDto.getMovieProducer(),movieDto.getMovieDirector(),movieDto.getMovieReleaseDate(),
-                movieDto.getMovieDesc(),movieDto.getMovieImageUrl());
-
-       this.movieRepo.addNewMovie(moviePOJO);
-    }*/
-
     public MoviesDto addMovieDetails(MoviesDto moviesDto) {
         return mapper.map(movieRepo.insertOrUpdateMovieDetails(mapper.map(moviesDto, MovieDetails.class)), MoviesDto.class);
     }
